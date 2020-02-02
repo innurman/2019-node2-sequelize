@@ -6,11 +6,13 @@ block content
         th 번호
         th 제목
         th 작성자
+        th 생성일
         th 조회수
     tbody
-      each v in data
+      each v in lists
         tr
           td= v.id
           td= v.title
           td= v.writer
+          td= v.wdate
           td= v.rnum

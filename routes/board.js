@@ -1,5 +1,8 @@
 var express = require('express');
 var router = express.Router();
+// https://www.npmjs.com/package/date-time
+// npm i date-time
+var datetime = require('date-time'); 
 var {Board} = require('../models');
 
 
@@ -15,8 +18,19 @@ router.get('/', async (req, res, next) => {
   // res.json(data);
   // -> [{"id":2,"title":"테스트","writer":"작성자","createdAt":"2020-02-02T05:44:01.000Z","updatedAt":"2020-02-02T05:44:01.000Z"},{"id":1,"title":"테스트","writer":"작성자","createdAt":"2020-02-02T05:43:50.000Z","updatedAt":"2020-02-02T05:43:50.000Z"}]
 
-  const vals = {};
-  vals.data = data;
+  // data.map(v => {
+  //   v.createAt = datetime({date: v.createdAt});
+  //   return v;
+  // });
+
+  let vals = {};
+  const resultData = data.map((v) => { // data[0]
+    v.createAt = datetime(v.createAt);
+    // -> 2020-01-19 15:11:59
+    v.wdate = datetime(v.createAt);
+    return v;
+  });
+  vals.lists = resultData;
   res.render("board-list.pug", vals);
 });
 
