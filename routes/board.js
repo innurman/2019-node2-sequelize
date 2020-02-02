@@ -20,34 +20,56 @@ var {Board} = require('../models');
 //   In a few cases, when there are too many results, this wrapping can be inefficient. 
 //   To disable this wrapping and receive a plain response instead, 
 //   pass { raw: true } as an option to the finder method.
-router.get('/', async (req, res, next) => {
-  const data = await Board.findAll({
-    order: [["id", "desc"]],
-    raw: true
-  });
-  // res.json(data);
-  // -> [{"id":2,"title":"테스트","writer":"작성자","createdAt":"2020-02-02T05:44:01.000Z","updatedAt":"2020-02-02T05:44:01.000Z"},{"id":1,"title":"테스트","writer":"작성자","createdAt":"2020-02-02T05:43:50.000Z","updatedAt":"2020-02-02T05:43:50.000Z"}]
-
-  // data.map(v => {
-  //   v.createAt = datetime({date: v.createdAt});
-  //   return v;
-  // });
-
-  let vals = {};
-  const resultData = data.map((v) => { // data[0]
-    v.createAt = datetime(v.createAt);
-    // -> 2020-01-19 15:11:59
-    v.wdate = datetime(v.createAt);
-    return v;
-  });
-  vals.lists = resultData;
-  res.render("board-list.pug", vals);
+router.get(['/', '/:id'], async (req, res, next) => {
+  let data;
+  try {
+    if (req.params.id) {
+      if (req.params.id == "write") {
+      }
+      else {
+        data = await Board.findOne({
+          where: {
+            id: req.params.id,
+          },
+          raw: true
+        });
+        res.json(data);
+      }
+    }
+    else {
+      data = await Board.findAll({
+        order: [["id", "desc"]],
+        raw: true
+      });
+        
+      // res.json(data);
+      // -> [{"id":2,"title":"테스트","writer":"작성자","createdAt":"2020-02-02T05:44:01.000Z","updatedAt":"2020-02-02T05:44:01.000Z"},{"id":1,"title":"테스트","writer":"작성자","createdAt":"2020-02-02T05:43:50.000Z","updatedAt":"2020-02-02T05:43:50.000Z"}]
+    
+      // data.map(v => {
+      //   v.createAt = datetime({date: v.createdAt});
+      //   return v;
+      // });
+    
+      let vals = {};
+      const resultData = data.map((v) => { // data[0]
+        v.createAt = datetime(v.createAt);
+        // -> 2020-01-19 15:11:59
+        v.wdate = datetime(v.createAt);
+        return v;
+      });
+      vals.lists = resultData;
+      res.render("board-list.pug", vals);
+    }
+  }
+  catch(err) {
+    next(err);
+  }
 });
 
 // http://127.0.0.1:3001/board/write
-router.get('/write', (req, res) => {
-  res.render('board-write.pug');
-});
+// router.get('/write', (req, res) => {
+//   res.render('board-write.pug');
+// });
 
 router.get('/delete/:id', async (req, res) => {
   const data = await Board.destroy({
@@ -68,5 +90,18 @@ router.post('/wr', async (req, res, next) => {
   });
   res.redirect("/board");
 });
+
+// RESTFUL method-overriding
+// _method() -> put()
+router.put('update', (req, res) => {
+  res.send("왔어요~");
+});
+
+
+//////////////////////////////////////////////////////////////////////
+// TODO
+//////////////////////////////////////////////////////////////////////
+// 1) onChg() -> async/await Promise 모델로
+// 2) router.put('update') : Promise 모델 & sequelize API
 
 module.exports = router;

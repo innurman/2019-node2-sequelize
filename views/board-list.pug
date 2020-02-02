@@ -1,5 +1,14 @@
 extends layout.pug
 block content
+  .p-2.border
+    form(action="/board/update", method="post")
+      input(type="hidden" name="_method" value="put")
+      input(type="hidden" name="id" id="id")
+      .p-2.form-inline
+        input.form-control(type="text" id="title" name="title")
+        input.form-control(type="text" id="writer" name="writer")
+        input.form-control(type="text" id="comment" comment="comment")
+        button.btn.btn-primary 수정
   table.table.table-bordered
     thead.thead-dark
       tr
@@ -17,3 +26,4 @@ block content
           td= v.wdate
           td
             button.btn.btn-sm.btn-danger(onclick=`location.href='/board/delete/${v.id}';`) 삭제
+            button.btn.btn-sm.btn-success(onclick=`onChg(${v.id})`) 수정
