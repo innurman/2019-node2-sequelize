@@ -10,11 +10,11 @@ var {Board} = require('../models');
 // http://127.0.0.1:3001/board/write
 router.get('/', async (req, res, next) => {
   const data = await Board.findAll();
-  res.json(data);
+  //res.json(data);
   res.render('board-list.pug');
 });
 
-router.get('/write',  (req, res, next) => {
+router.get('/write', (req, res) => {
   res.render('board-write.pug');
 });
 

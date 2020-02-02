@@ -13,6 +13,8 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.TEXT()
     }
   }, {
-
-  });    
-}
+		timestamps: true,
+		charset: 'utf8',
+		tableName: 'boards'
+	});
+};
