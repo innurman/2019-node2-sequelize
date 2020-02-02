@@ -5,10 +5,11 @@ var fs = require('fs');
 var cookieParser = require('cookie-parser');
 var rfs = require('rotating-file-stream');
 var logger = require('morgan');
-
+var methodOverride = require('method-override')
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var boardRouter = require('./routes/board');
 
 var app = express();
 var {sequelize} = require('./models');
@@ -37,6 +38,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/board', boardRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

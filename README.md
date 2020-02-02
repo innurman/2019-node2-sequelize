@@ -54,3 +54,12 @@ Using environment "development".
 == 20200202051604-create-sample: migrating =======
 == 20200202051604-create-sample: migrated (0.025s)
 ~~~
+
+## Reference
+express-generator (2) - 폴더 및 파일 역할
+  - https://victorydntmd.tistory.com/23
+  - https://victorydntmd.tistory.com/24
+ORMs for Beginners: Models and Migrations with Sequelize in Node
+  - https://www.duringthedrive.com/2017/05/06/models-migrations-sequelize-node/
+  - https://victorydntmd.tistory.com/26
+  - https://victorydntmd.tistory.com/27
