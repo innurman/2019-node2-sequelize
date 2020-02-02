@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var fs = require('fs');
 var cookieParser = require('cookie-parser');
+var rfs = require('rotating-file-stream');
 var logger = require('morgan');
 
 
@@ -10,9 +11,19 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
+var {sequelize} = require('./models');
+sequelize.sync({forced: true});
 
-var accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
-app.use(logger('combined', { stream: accessLogStream }));
+/* logger */
+var logDirectory = path.join(__dirname, 'log');
+fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory)
+var accessLogStream = rfs.createStream('access.log', {
+  size: "10M",
+  interval: "1d",
+  compress: "gzip",
+  path: logDirectory
+})
+app.use(logger('combined', { stream: accessLogStream }))
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
