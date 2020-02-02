@@ -6,8 +6,8 @@ block content
         th 번호
         th 제목
         th 작성자
-        th 생성일
-        th 조회수
+        th 작성일
+        th 관리
     tbody
       each v in lists
         tr
@@ -15,4 +15,5 @@ block content
           td= v.title
           td= v.writer
           td= v.wdate
-          td= v.rnum
+          td
+            button.btn.btn-sm.btn-danger(onclick=`location.href='/board/delete/${v.id}';`) 삭제

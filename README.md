@@ -59,7 +59,9 @@ Using environment "development".
 express-generator (2) - 폴더 및 파일 역할
   - https://victorydntmd.tistory.com/23
   - https://victorydntmd.tistory.com/24
-ORMs for Beginners: Models and Migrations with Sequelize in Node
-  - https://www.duringthedrive.com/2017/05/06/models-migrations-sequelize-node/
+Sequelize
+  - https://sequelize.org/master/manual/model-querying-finders.html
+  - ORMs for Beginners: Models and Migrations with Sequelize in Node
+    + https://www.duringthedrive.com/2017/05/06/models-migrations-sequelize-node/
   - https://victorydntmd.tistory.com/26
   - https://victorydntmd.tistory.com/27

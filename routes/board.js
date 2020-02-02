@@ -11,9 +11,19 @@ var {Board} = require('../models');
 // });
 
 // http://127.0.0.1:3001/board
+// findAll()'s "raw: true" option
+//   https://sequelize.org/master/manual/model-querying-finders.html
+//   By default, the results of all finder methods are instances of the model class 
+//   (as opposed to being just plain JavaScript objects). 
+//   This means that after the database returns the results, 
+//   Sequelize automatically wraps everything in proper instance objects. 
+//   In a few cases, when there are too many results, this wrapping can be inefficient. 
+//   To disable this wrapping and receive a plain response instead, 
+//   pass { raw: true } as an option to the finder method.
 router.get('/', async (req, res, next) => {
   const data = await Board.findAll({
-    order: [["id", "desc"]]
+    order: [["id", "desc"]],
+    raw: true
   });
   // res.json(data);
   // -> [{"id":2,"title":"테스트","writer":"작성자","createdAt":"2020-02-02T05:44:01.000Z","updatedAt":"2020-02-02T05:44:01.000Z"},{"id":1,"title":"테스트","writer":"작성자","createdAt":"2020-02-02T05:43:50.000Z","updatedAt":"2020-02-02T05:43:50.000Z"}]
@@ -37,6 +47,16 @@ router.get('/', async (req, res, next) => {
 // http://127.0.0.1:3001/board/write
 router.get('/write', (req, res) => {
   res.render('board-write.pug');
+});
+
+router.get('/delete/:id', async (req, res) => {
+  const data = await Board.destroy({
+    where: {
+      id: req.params.id
+    }
+  });
+  //res.json(data);
+  res.redirect("/board");
 });
 
 // http://127.0.0.1:3001/board/wr
