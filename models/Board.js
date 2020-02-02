@@ -5,12 +5,6 @@ module.exports = (sequelize, Sequelize) => {
     },
     writer: {
       type: Sequelize.STRING(255)
-    },
-    img: {
-      type: Sequelize.STRING(255)
-    },
-    comment: {
-      type: Sequelize.TEXT()
     }
   }, {
 		timestamps: true,

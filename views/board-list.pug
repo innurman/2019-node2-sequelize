@@ -8,3 +8,9 @@ block content
         th 작성자
         th 조회수
     tbody
+      each v in data
+        tr
+          td= v.id
+          td= v.title
+          td= v.writer
+          td= v.rnum
